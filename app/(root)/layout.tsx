@@ -32,23 +32,34 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
-    appearance={{
-      baseTheme: dark,
-    }}    
+      appearance={{
+        baseTheme: dark,
+      }}
     >
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
         <body className={inter.className}>
           <Topbar />
-          <main className="flex">
-            <LeftSidebar />
-            <section className="w-full h-screen">
-              <div className='w-full max-w-4xl'>
-              {children}
-              </div>
+          <main className="flex min-h-screen flex-row">
+            {/* LeftSidebar: only show on md and above */}
+            <div className="hidden md:flex">
+              <LeftSidebar />
+            </div>
+
+            {/* Main content */}
+            <section className="flex-1 h-screen overflow-y-auto px-4">
+              <div className="w-full max-w-4xl mx-auto">{children}</div>
             </section>
-            <RightSidebar />
+
+            {/* RightSidebar: only show on xl and above if needed */}
+            <div>
+              <RightSidebar />
+            </div>
           </main>
-          <Bottombar />
+
+          {/* Bottombar: only show on small screens */}
+          <div className="md:hidden">
+            <Bottombar />
+          </div>
         </body>
       </html>
     </ClerkProvider>
